@@ -1,0 +1,93 @@
+{
+  "name": "extensionless-file-language-guard",
+  "displayName": "Extensionless File Language Guard",
+  "description": "Prevents automatic language detection for saved files that have no filename extension, while leaving untitled/new unsaved editors alone so VS Code can still auto-detect their language from content.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.125.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "extensionless-plain-text",
+        "aliases": [
+          "Extensionless Plain Text"
+        ],
+        "mimetypes": [
+          "text/plain"
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Extensionless File Language Guard",
+      "type": "object",
+      "properties": {
+        "extensionlessFileLanguageGuard.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable guarding saved files that have no filename extension from VS Code's automatic language detection."
+        },
+        "extensionlessFileLanguageGuard.schemes": {
+          "type": "array",
+          "default": [
+            "file",
+            "vscode-remote"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "description": "URI schemes whose extensionless documents should be guarded."
+        },
+        "extensionlessFileLanguageGuard.ignoredBasenames": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "description": "Exact case-sensitive basenames that should keep VS Code's normal language behavior, such as Makefile or Dockerfile."
+        },
+        "extensionlessFileLanguageGuard.showStatusMessages": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show a short status bar message when a document is guarded or released."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.125.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "typescript-eslint": "^8.61.1",
+    "eslint": "^10.5.0",
+    "typescript": "^6.0.3",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  },
+  "publisher": "fredbill1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FredBill1/extensionless-file-language-guard"
+  }
+}
